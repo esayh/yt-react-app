@@ -7,6 +7,8 @@ const About = () => {
          <p>Youtube API</p>
          <h3>Ivan Castillo</h3>
          <p>Budding web dev</p>
+         <h3>Esay Hernandez</h3>
+         <p>Front-end Web Dev</p>
       </div>
    )
 }
