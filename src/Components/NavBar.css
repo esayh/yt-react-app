@@ -1,0 +1,16 @@
+.navBar {
+   display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+   background-color: crimson;
+   height: 50px;
+}
+
+.links {
+   font-size: x-large;
+   text-decoration: none;
+   color: black;
+}
+
+
+
