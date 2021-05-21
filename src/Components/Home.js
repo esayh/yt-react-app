@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import './Home.css'
 
@@ -43,10 +44,12 @@ class Home extends Component {
 		const { videos, searchVideos } = this.state
 		const allVids = videos.map((vid) => {
 			return (
+            <Link to={`/videos/${vid.id.videoId}`} key={vid.id.videoId}>
 				<li>
 					<h2>{vid.snippet.title}</h2>
 					<img src={vid.snippet.thumbnails.medium.url} alt={vid.snippet.description} />
 				</li>
+            </Link>
 			)
 		})
 		return (
