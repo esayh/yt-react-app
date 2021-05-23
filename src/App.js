@@ -2,6 +2,7 @@ import { Switch, Route } from 'react-router-dom'
 import NavBar from './Components/NavBar';
 import Home from './Components/Home'
 import About from './Components/About'
+import Video from './Components/Video'
 import './App.css';
 
 function App() {
@@ -9,8 +10,9 @@ function App() {
     <div className="App">
       <NavBar />
       <Switch>
-      <Route exact path={'/'} component={Home} />
-      <Route path={'/about'} component={About}/>
+        <Route exact path='/' component={Home} />
+        <Route path='/about' component={About}/>
+        <Route path='/videos/:id' component={Video} />
       </Switch>
     </div>
   );

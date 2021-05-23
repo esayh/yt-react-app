@@ -1,6 +1,7 @@
 import React from 'react'
 import './About.css'
 
+
 const About = () => {
    return (
       <div className='About'>
@@ -14,10 +15,12 @@ const About = () => {
             <h3>Ivan Castillo</h3>
             <p>Full Stack Web Developer.<br />
             Penchant for long workouts along the beach and old-school video game music.</p>
+            <a href="https://github.com/IvanCastillo1986">GitHub</a>
          </div>
          <div>
             <h3>Esay Hernandez</h3>
             <p>Front-end Web Dev</p>
+            {/* Github link */}
          </div>
       </div>
    )

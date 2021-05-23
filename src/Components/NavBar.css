@@ -3,14 +3,12 @@
    align-items: center;
    justify-content: space-evenly;
    background-color: crimson;
-   height: 50px;
+   height: 150px;
 }
 
 .links {
    font-size: x-large;
+   font-weight: bold;
    text-decoration: none;
-   color: black;
+   color: white;
 }
-
-
-
