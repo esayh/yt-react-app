@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import './Home.css'
 
+// For every video in videos returned by the search result:
+	// Write a function that takes video ID and GETs video data response from the api
+	// For each video id submitted, we should get:
+		// 	video channel logo
+		// 	video rating
+		// 	how many years uploaded
+
+
 class Home extends Component {
 	constructor() {
 		super()
@@ -43,12 +51,18 @@ class Home extends Component {
 	render() {
 		const { videos, searchVideos } = this.state
 		const allVids = videos.map((vid) => {
+
 			return (
             <Link to={`/videos/${vid.id.videoId}`} key={vid.id.videoId}>
-				<li>
-					<h2>{vid.snippet.title}</h2>
+				{/* <li> */}
+				<div>
 					<img src={vid.snippet.thumbnails.medium.url} alt={vid.snippet.description} />
-				</li>
+					<div>
+						<h3>{vid.snippet.title}</h3>
+						<p>{vid.snippet.description}</p>
+					</div>
+				</div>
+				{/* </li> */}
             </Link>
 			)
 		})
@@ -63,9 +77,10 @@ class Home extends Component {
 						value={searchVideos}
 					/>
 					<button>Submit</button>
-					<h3>No Videos</h3>
+					{/* <h3>No Videos</h3> */}
 				</form>
-				<ul>{allVids}</ul>
+				{/* <ul>{allVids}</ul> */}
+				{allVids}
 			</div>
 		)
 	}

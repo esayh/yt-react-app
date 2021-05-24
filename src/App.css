@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
 
+html {
+  background-color: rgb(4, 83, 88);
+}
+
 .App {
   text-align: center;
-  background-color: rgb(4, 83, 88);
-  height: 100vh;
+  /* background-color: rgb(4, 83, 88); */
+  /* height: 100vh; */
   font-family: 'Ubuntu', sans-serif;
   font-weight: 500;
+  color: white;
 }
