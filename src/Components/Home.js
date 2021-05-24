@@ -15,13 +15,13 @@ class Home extends Component {
 	constructor() {
 		super()
 		this.state = {
-			videos: [],
 			searchVideos: '',
+			videos: [],
 		}
 	}
 
-	handleSubmit = async (e) => {
-		e.preventDefault()
+	handleSubmit = async (event) => {
+		event.preventDefault()
 		const credentials = process.env.REACT_APP_API_KEY
 		const ytsearch = this.state.searchVideos
 
@@ -34,7 +34,7 @@ class Home extends Component {
 				videos: data.items,
 				searchVideos: '',
 			})
-		} catch (e) {
+		} catch (error) {
 			this.setState({
 				videos: [],
 				searchVideos: '',
