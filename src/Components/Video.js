@@ -18,14 +18,20 @@ class Video extends React.Component {
     }
 
     getVideoDetails = async () => { // This function should get video data so that we may display it under video
-        const { id, video } = this.state
-        const { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?id=${id}&part=snippet,contentDetails,statistics&key=${process.env.REACT_APP_API_KEY}`)
-        
-        this.setState({
-            video: data.items[0]
-        })
+        const { id } = this.state
+
+        try {
+            const { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?id=${id}&part=snippet,contentDetails,statistics&key=${process.env.REACT_APP_API_KEY}`)
+            this.setState({
+                video: data.items[0]
+            })
+        }
+        catch (e) {
+            console.log('Video could not be found')
+        }
     }
     // Write function that takes and makes comments
+    // Make a panel aside for related videos. Maybe another component?
     
 
     render() {
@@ -39,9 +45,12 @@ class Video extends React.Component {
         }
 
             return (
-                <div>
+                <div className='Video'>
                     <YouTube videoId={id} />
-                    {/* <h2>{video.snippet.title}</h2> */}
+                    <div>
+                        {video.snippet ? <h2>{video.snippet.title}</h2> : null}
+                        {/* {video.statistics} */}
+                    </div>
                 </div>
             )
     }
