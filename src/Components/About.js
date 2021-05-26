@@ -1,9 +1,9 @@
 import React from 'react'
 import './About.css'
-
+import GitHubIcon from '@material-ui/icons/GitHub'
 
 const About = () => {
-   return (
+	return (
 		<div className='About'>
 			<div>
 				<h2>Description</h2>
@@ -15,6 +15,7 @@ const About = () => {
 					<br />
 					We can be reached at our GitHubs linked below.
 				</p>
+				<hr />
 			</div>
 			<div>
 				<h3>Ivan Castillo</h3>
@@ -23,14 +24,22 @@ const About = () => {
 					<br />
 					Penchant for long workouts along the beach and old-school video game music.
 				</p>
-				<a href='https://github.com/IvanCastillo1986'>GitHub</a>
+				<GitHubIcon
+					onClick={() => window.open('https://github.com/IvanCastillo1986')}
+					style={{ color: 'black', cursor: 'pointer' }}
+				/>
 			</div>
 			<div>
 				<h3>Esay Hernandez</h3>
-				<p>Full Stack Web Dev</p><br />
-				<p>When I'm not building apps like this one you can find me planning my next road trip or hiking up a mountain.</p>
-				<a href='https://github.com/esayh'>GitHub</a>
-
+				<p>Full Stack Web Dev</p>
+				<p>
+					When I'm not building apps like this one you can find me planning my next road trip
+					or hiking up a mountain.
+				</p>
+				<GitHubIcon
+					onClick={() => window.open('https://github.com/esayh')}
+					style={{ color: 'black', cursor: 'pointer' }}
+				/>
 			</div>
 		</div>
 	)

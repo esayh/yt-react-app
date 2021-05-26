@@ -6,3 +6,7 @@ h3 {
     text-decoration: underline;
 }
 
+a:visited {
+    color: white;
+}
+
