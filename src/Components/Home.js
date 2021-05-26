@@ -16,6 +16,7 @@ class Home extends Component {
 		this.state = {
 			searchVideos: '',
 			videos: [],
+			showVid: false 
 		}
 	}
 
@@ -28,10 +29,10 @@ class Home extends Component {
 			const { data } = await axios.get(
 				`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=${credentials}&type=video&q=${ytsearch}`
 			)
-			console.log(data)
 			this.setState({
 				videos: data.items,
 				searchVideos: '',
+				showVid : true
 			})
 		} catch (error) {
 			this.setState({
@@ -74,7 +75,7 @@ class Home extends Component {
 					/>
 					<button>Submit</button>
 				</form>
-				{allVids}
+				{this.state.showVid ? allVids : 'No videos'}
 			</div>
 		)
 	}
