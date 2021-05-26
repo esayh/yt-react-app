@@ -17,7 +17,6 @@ class Video extends React.Component {
     componentDidMount() {
         console.log('componentDidMount')
         this.getVideoDetails()
-        this.getChannelDetails()
     }
 
     getVideoDetails = async () => { // This function should get video data so that we may display it under video
@@ -25,13 +24,27 @@ class Video extends React.Component {
 
         try {
             const { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,contentDetails,statistics&key=${process.env.REACT_APP_API_KEY}`)
+            
+            const video = data.items[0]
+            
+            console.log(video)
+            // console.log(channel)
+            
             this.setState({
                 video: data.items[0],
-                channelId: data.items[0].snippet.channelId
             })
         }
         catch (e) {
             console.log('Video could not be found')
+        }
+        try {
+            const { video } = this.state
+            const channelId = video.snippet.channelId
+            const { channel } = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelId}&key=${process.env.REACT_APP_API_KEY}`)
+            console.log(channel)
+        }
+        catch (e) {
+            console.log('could not get channel')
         }
     }
     getChannelDetails = async () => {
@@ -41,12 +54,14 @@ class Video extends React.Component {
         try {
         const { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelId}&key=${process.env.REACT_APP_API_KEY}`)
         console.log(data.items[0])
+        this.setState({
+            channel: data
+        })
         }
         catch {
             console.log('could not find channel')
         }
     }
-    // Write function that takes and makes comments
     // Make a panel aside for related videos. Maybe another component?
     
 
@@ -64,7 +79,6 @@ class Video extends React.Component {
                 <div className='Video'>
                     <YouTube videoId={videoId} />
                     <div>
-                        {/* This div is for the  */}
                         {video.snippet ? <h2>{video.snippet.title}</h2> : null}
                         {video.statistics ? <span><p>{Number(video.statistics.viewCount).toLocaleString()} views</p></span> : null}
                         {video.statistics ? <span><p>{Number(video.statistics.likeCount).toLocaleString()} Likes | {Number(video.statistics.dislikeCount).toLocaleString()} Dislikes</p></span> : null}
@@ -73,7 +87,6 @@ class Video extends React.Component {
                         {/* Channel logo, Channel name */}
                         {video.snippet ? <p>{video.snippet.channelTitle} Channel</p> : null}
                         {/*channel subscribers*/}
-                        {/* Description */}
                         {video.statistics ? video.snippet.description : null}
                     </div>
                 </div>

@@ -17,6 +17,8 @@ class Home extends Component {
 		this.state = {
 			searchVideos: '',
 			videos: [],
+			number: '',
+			toggleWelcome: true
 		}
 	}
 
@@ -76,10 +78,9 @@ class Home extends Component {
 						onChange={this.handleChange}
 						value={searchVideos}
 					/>
+					<input type="number" name="" id="" />
 					<button>Submit</button>
-					{/* <h3>No Videos</h3> */}
 				</form>
-				{/* <ul>{allVids}</ul> */}
 				{allVids}
 			</div>
 		)
