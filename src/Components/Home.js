@@ -3,12 +3,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import './Home.css'
 
-// For every video in videos returned by the search result:
-	// Write a function that takes video ID and GETs video data response from the api
-	// For each video id submitted, we should get:
-		// 	video channel logo
-		// 	video rating
-		// 	how many years uploaded
 
 
 class Home extends Component {
@@ -17,8 +11,8 @@ class Home extends Component {
 		this.state = {
 			searchVideos: '',
 			videos: [],
-			number: '',
-			toggleWelcome: true
+			numberOfResults: 6,
+			showVid: false 
 		}
 	}
 
@@ -26,15 +20,16 @@ class Home extends Component {
 		event.preventDefault()
 		const credentials = process.env.REACT_APP_API_KEY
 		const ytsearch = this.state.searchVideos
+		const { numberOfResults } = this.state
 
 		try {
 			const { data } = await axios.get(
-				`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=${credentials}&type=video&q=${ytsearch}`
+				`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&key=${credentials}&type=video&q=${ytsearch}&maxResults=${numberOfResults}`
 			)
-			console.log(data)
 			this.setState({
 				videos: data.items,
 				searchVideos: '',
+				showVid : true
 			})
 		} catch (error) {
 			this.setState({
@@ -49,23 +44,25 @@ class Home extends Component {
 			searchVideos: e.target.value,
 		})
 	}
+	handleNumbers = (e) => {
+		this.setState({
+			numberOfResults: e.target.value
+		})
+	}
 
 	render() {
 		const { videos, searchVideos } = this.state
 		const allVids = videos.map((vid) => {
-
 			return (
-            <Link to={`/videos/${vid.id.videoId}`} key={vid.id.videoId}>
-				{/* <li> */}
-				<div>
-					<img src={vid.snippet.thumbnails.medium.url} alt={vid.snippet.description} />
+				<Link to={`/videos/${vid.id.videoId}`} key={vid.id.videoId}>
 					<div>
-						<h3>{vid.snippet.title}</h3>
-						<p>{vid.snippet.description}</p>
+						<img src={vid.snippet.thumbnails.medium.url} alt={vid.snippet.description} />
+						<div>
+							<h3>{vid.snippet.title}</h3>
+							<p>{vid.snippet.description}</p>
+						</div>
 					</div>
-				</div>
-				{/* </li> */}
-            </Link>
+				</Link>
 			)
 		})
 		return (
@@ -78,10 +75,12 @@ class Home extends Component {
 						onChange={this.handleChange}
 						value={searchVideos}
 					/>
-					<input type="number" name="" id="" />
+					<br />
+					<p>How many results would you like? <input onChange={this.handleNumbers} type="number" placeholder="how many results?" name="" id="" /></p>
+					<br />
 					<button>Submit</button>
 				</form>
-				{allVids}
+				{this.state.showVid ? allVids : 'No videos'}
 			</div>
 		)
 	}
