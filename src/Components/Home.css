@@ -5,6 +5,9 @@ input {
     border: 2px solid grey;
     border-radius: .4em;
 }
+p input {
+    width: 40px;
+}
 
 
 a {
@@ -21,6 +24,25 @@ a div img {
 a > div > div {
     display: flex;
     flex-direction: column;
+}
+h3 {
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 940px) {
+
+    .Home .Description {
+        display: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media only screen and (max-width: 630px) {
+    .Info {
+        display: block;
+    }
 }
 
 /* USE CODE BELOW TO TEXT-WRAP MEDIA QUERY: */
