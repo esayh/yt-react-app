@@ -5,50 +5,41 @@ import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt'
 import YouTube from 'react-youtube'
 
 class Video extends React.Component {
-	constructor(props) {
-		// Called props into constructor so that we can retrieve id inside the constructor
-		super()
-		this.state = {
-			videoId: props.match.params.id,
-			video: {},
-			channelId: '',
-			channel: {},
-		}
-	}
-	componentDidMount() {
-		this.getVideoDetails()
-		// this.getChannelDetails()
-	}
 
-	getVideoDetails = async () => {
-		const { videoId } = this.state
+    constructor(props) {    // Called props into constructor so that we can retrieve id inside the constructor
+        super()
+        this.state = {
+            videoId: props.match.params.id,
+            video: {},
+            channel: {}
+        }
+    }
+    componentDidMount() {
+        console.log('componentDidMount')
+        this.getVideoDetails()
+    }
 
-		try {
-			const { data } = await axios.get(
-				`https://youtube.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,contentDetails,statistics&key=${process.env.REACT_APP_API_KEY}`
-			)
-			this.setState({
-				video: data.items[0],
-				channelId: data.items[0].snippet.channelId,
-			})
-		} catch (e) {
-			console.log(e, 'Video could not be found')
-		}
-	}
-	getChannelDetails = async () => {
-		const { channelId } = this.state
-		console.log(channelId)
-		// const { data } = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?id=${channelId}&part=snippet&key=${process.env.REACT_APP_API_KEY}`)
-		try {
-			const { data } = await axios.get(
-				`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelId}&key=${process.env.REACT_APP_API_KEY}`
-			)
-			console.log(data.items[0])
-		} catch {
-			console.log('could not find channel')
-		}
-	}
+    getVideoDetails = async () => { // This function gets both video AND channel data
+        const { videoId } = this.state
 
+        try {
+            await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,contentDetails,statistics&key=${process.env.REACT_APP_API_KEY}`)
+            .then(response => response.data.items[0])
+            .then(async response => {
+                let channel = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${response.snippet.channelId}&key=${process.env.REACT_APP_API_KEY}`)
+                console.log(response)
+                console.log(channel.data)
+                this.setState({
+                    video: response,
+                    channel: channel.data.items[0]
+                })
+            })
+        }
+        catch (e) {
+            console.log('Video could not be found')
+        }
+    }
+    
 	goBack = () => {
 		this.props.history.goBack()
 	}
@@ -56,12 +47,7 @@ class Video extends React.Component {
 	// Make a panel aside for related videos. Maybe another component?
 
 	render() {
-		const { videoId, video } = this.state
-		try {
-			console.log(video.snippet.title)
-		} catch (e) {
-			console.log(e, 'Video could not be found')
-		}
+		const { videoId, video, channel } = this.state
 
 		return (
 			<div className='Video'><br />
@@ -87,12 +73,16 @@ class Video extends React.Component {
 						</span>
 					) : null}
 				</div>
-				<div>
+				<div className='ChannelDetails'>
 					{/* Channel logo, Channel name */}
+                    {channel.snippet ? <img src={channel.snippet.thumbnails.default.url} alt='channel logo'/> : <p>Channel Logo</p> }
 					{video.snippet ? <p>{video.snippet.channelTitle} Channel</p> : null}
 					{/*channel subscribers*/}
+                    {channel.statistics ? (
+                        <p>{Number(channel.statistics.subscriberCount).toLocaleString()}</p>
+                    ) : null}
 					{/* Description */}
-					{video.statistics ? video.snippet.description : null}
+					{video.snippet ? <p>{video.snippet.description}</p> : null}
 				</div>
 			</div>
 		)

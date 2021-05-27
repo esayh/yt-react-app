@@ -3,12 +3,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import './Home.css'
 
-// For every video in videos returned by the search result:
-// Write a function that takes video ID and GETs video data response from the api
-// For each video id submitted, we should get:
-// 	video channel logo
-// 	video rating
-// 	how many years uploaded
+
 
 class Home extends Component {
 	constructor() {
@@ -16,6 +11,7 @@ class Home extends Component {
 		this.state = {
 			searchVideos: '',
 			videos: [],
+			numberOfResults: 6,
 			showVid: false 
 		}
 	}
@@ -24,10 +20,11 @@ class Home extends Component {
 		event.preventDefault()
 		const credentials = process.env.REACT_APP_API_KEY
 		const ytsearch = this.state.searchVideos
+		const { numberOfResults } = this.state
 
 		try {
 			const { data } = await axios.get(
-				`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&key=${credentials}&type=video&q=${ytsearch}`
+				`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&key=${credentials}&type=video&q=${ytsearch}&maxResults=${numberOfResults}`
 			)
 			this.setState({
 				videos: data.items,
@@ -45,6 +42,11 @@ class Home extends Component {
 	handleChange = (e) => {
 		this.setState({
 			searchVideos: e.target.value,
+		})
+	}
+	handleNumbers = (e) => {
+		this.setState({
+			numberOfResults: e.target.value
 		})
 	}
 
@@ -73,6 +75,9 @@ class Home extends Component {
 						onChange={this.handleChange}
 						value={searchVideos}
 					/>
+					<br />
+					<p>How many results would you like? <input onChange={this.handleNumbers} type="number" placeholder="how many results?" name="" id="" /></p>
+					<br />
 					<button>Submit</button>
 				</form>
 				{this.state.showVid ? allVids : 'No videos'}
