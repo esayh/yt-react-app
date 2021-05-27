@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React from 'react'
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt'
 import YouTube from 'react-youtube'
 
 class Video extends React.Component {
@@ -62,8 +64,9 @@ class Video extends React.Component {
 		}
 
 		return (
-			<div className='Video'>
+			<div className='Video'><br />
 				<button onClick={this.goBack}>Go back</button>
+                <br />
 				<YouTube videoId={videoId} />
 				<div>
 					{/* This div is for the  */}
@@ -76,8 +79,10 @@ class Video extends React.Component {
 					{video.statistics ? (
 						<span>
 							<p>
-								{Number(video.statistics.likeCount).toLocaleString()} Likes |{' '}
-								{Number(video.statistics.dislikeCount).toLocaleString()} Dislikes
+								<ThumbUpAltIcon fontSize='small' />{' '}
+								{Number(video.statistics.likeCount).toLocaleString()} |{' '}
+								<ThumbDownAltIcon fontSize='small' />{' '}
+								{Number(video.statistics.dislikeCount).toLocaleString()}{' '}
 							</p>
 						</span>
 					) : null}

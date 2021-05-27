@@ -27,7 +27,7 @@ class Home extends Component {
 
 		try {
 			const { data } = await axios.get(
-				`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=${credentials}&type=video&q=${ytsearch}`
+				`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=8&key=${credentials}&type=video&q=${ytsearch}`
 			)
 			this.setState({
 				videos: data.items,
