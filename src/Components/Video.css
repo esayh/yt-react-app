@@ -1,6 +1,11 @@
 .Video {
     width: 100%;
 }
+.Video hr {
+    background-color: #ff6c11;
+    height: 10px;
+    border-radius: 7px;
+}
 
 .ChannelDetails {
     display: flex;

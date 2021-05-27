@@ -8,7 +8,7 @@ const About = () => {
 			<div>
 				<h2>Description</h2>
 				<p>
-					Youtube API created by two great developers!
+					Youtube API application created by two great developers!
 					<br />
 					Enjoy the app. Feel free to contact us about any suggestions for future
 					implementations.
@@ -21,12 +21,13 @@ const About = () => {
 				<h3>Ivan Castillo</h3>
 				<p>
 					Full Stack Web Developer.
-					<br />
+				</p>
+				<p>
 					Penchant for long workouts along the beach and old-school video game music.
 				</p>
 				<GitHubIcon
 					onClick={() => window.open('https://github.com/IvanCastillo1986')}
-					style={{ color: 'black', cursor: 'pointer' }}
+					style={{ color: '#2ED2E6', cursor: 'pointer' }}
 				/>
 			</div>
 			<div>
@@ -38,7 +39,7 @@ const About = () => {
 				</p>
 				<GitHubIcon
 					onClick={() => window.open('https://github.com/esayh')}
-					style={{ color: 'black', cursor: 'pointer' }}
+					style={{ color: '#2ED2E6', cursor: 'pointer' }}
 				/>
 			</div>
 		</div>
