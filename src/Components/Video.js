@@ -40,8 +40,8 @@ class Video extends React.Component {
         try {
             const { video } = this.state
             const channelId = video.snippet.channelId
-            const { channel } = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelId}&key=${process.env.REACT_APP_API_KEY}`)
             console.log(channel)
+            const { channel } = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${channelId}&key=${process.env.REACT_APP_API_KEY}`)
         }
         catch (e) {
             console.log('could not get channel')
