@@ -13,3 +13,9 @@ a:visited {
 .bio {
     line-height: 25px;
 }
+
+.About hr {
+    height: 20px;
+    border: 0;
+    box-shadow: inset 0 13px 20px -12px;
+}

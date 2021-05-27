@@ -15,7 +15,7 @@ a {
 }
 a > div {
     display: flex;
-    color: white;
+    color: #2ED2E6;
     margin-bottom: 40px;
 }
 a div img {
