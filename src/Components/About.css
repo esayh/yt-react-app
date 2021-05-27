@@ -10,3 +10,6 @@ a:visited {
     color: white;
 }
 
+.bio {
+    line-height: 25px;
+}

@@ -7,7 +7,7 @@ const NavBar = () => {
    return (
       <nav className='navBar'>
          <Link className='links' to={'/'}><YouTubeIcon fontSize='large'/></Link>
-         {/* <Link className='links' to='/'>Home</Link> */}
+         <Link className='links' to='/'>Home</Link>
          <Link className='links' to={'/about'}>About</Link>
       </nav>
    )
