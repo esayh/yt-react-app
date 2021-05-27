@@ -55,11 +55,11 @@ class Home extends Component {
 		const allVids = videos.map((vid) => {
 			return (
 				<Link to={`/videos/${vid.id.videoId}`} key={vid.id.videoId}>
-					<div>
+					<div className='Info'>
 						<img src={vid.snippet.thumbnails.medium.url} alt={vid.snippet.description} />
 						<div>
 							<h3>{vid.snippet.title}</h3>
-							<p>{vid.snippet.description}</p>
+							<p className='Description'>{vid.snippet.description}</p>
 						</div>
 					</div>
 				</Link>
@@ -71,16 +71,24 @@ class Home extends Component {
 				<form action='' onSubmit={this.handleSubmit}>
 					<input
 						type='text'
-						placeholder='search video'
+						placeholder='Search Video'
 						onChange={this.handleChange}
 						value={searchVideos}
 					/>
 					<br />
-					<p>How many results would you like? <input onChange={this.handleNumbers} type="number" placeholder="how many results?" name="" id="" /></p>
+					<p>
+						<label htmlFor="numOfResults">How many results? </label> 
+						<input 
+							onChange={this.handleNumbers} 
+							type="number" 
+							placeholder='6' 
+							name="numOfResults" 
+						/>
+					</p>
 					<br />
-					<button>Submit</button>
+					<button>Search</button>
 				</form>
-				{this.state.showVid ? allVids : 'No videos'}
+				{this.state.showVid ? allVids : 'No Videos'}
 			</div>
 		)
 	}

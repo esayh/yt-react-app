@@ -3,6 +3,7 @@ import React from 'react'
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt'
 import YouTube from 'react-youtube'
+import './Video.css'
 
 class Video extends React.Component {
 
@@ -11,14 +12,23 @@ class Video extends React.Component {
         this.state = {
             videoId: props.match.params.id,
             video: {},
-            channel: {}
+            channel: {},
+			width: window.innerWidth
         }
     }
     componentDidMount() {
         console.log('componentDidMount')
         this.getVideoDetails()
+		window.addEventListener('resize', () => {
+			this.getWidth()
+		})
     }
 
+	getWidth = () => {
+		this.setState({
+			width: window.innerWidth
+		})
+	}
     getVideoDetails = async () => { // This function gets both video AND channel data
         const { videoId } = this.state
 
@@ -28,7 +38,7 @@ class Video extends React.Component {
             .then(async response => {
                 let channel = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${response.snippet.channelId}&key=${process.env.REACT_APP_API_KEY}`)
                 console.log(response)
-                console.log(channel.data)
+                console.log(channel.data.items[0])
                 this.setState({
                     video: response,
                     channel: channel.data.items[0]
@@ -45,17 +55,40 @@ class Video extends React.Component {
 	}
 	// Write function that takes and makes comments
 	// Make a panel aside for related videos. Maybe another component?
+	// Video dimensions can be fixed for responsiveness by registering window width
 
 	render() {
-		const { videoId, video, channel } = this.state
+		const { videoId, video, channel, width } = this.state
+		let opts = {
+			width: '960',
+			height: '585'
+		}
+		if (width < 1150 && width > 815) {	//default size
+			opts = {
+				width: '640',
+				height: '390'
+			}
+		}
+		else if (width <= 815) {
+			opts = {
+				width: '320',
+				height: '195'
+			}
+		}
 
 		return (
 			<div className='Video'><br />
 				<button onClick={this.goBack}>Go back</button>
                 <br />
-				<YouTube videoId={videoId} />
+
+				<div className='Player-wrapper'>
+					<YouTube 
+						videoId={videoId}
+						opts={opts}
+					/>
+				</div>
+
 				<div>
-					{/* This div is for the  */}
 					{video.snippet ? <h2>{video.snippet.title}</h2> : null}
 					{video.statistics ? (
 						<span>
@@ -73,17 +106,15 @@ class Video extends React.Component {
 						</span>
 					) : null}
 				</div>
+				<hr />
 				<div className='ChannelDetails'>
-					{/* Channel logo, Channel name */}
                     {channel.snippet ? <img src={channel.snippet.thumbnails.default.url} alt='channel logo'/> : <p>Channel Logo</p> }
-					{video.snippet ? <p>{video.snippet.channelTitle} Channel</p> : null}
-					{/*channel subscribers*/}
-                    {channel.statistics ? (
-                        <p>{Number(channel.statistics.subscriberCount).toLocaleString()}</p>
-                    ) : null}
-					{/* Description */}
-					{video.snippet ? <p>{video.snippet.description}</p> : null}
+					<div>
+						{video.snippet ? <p>{video.snippet.channelTitle} Channel</p> : null}
+                    	{channel.statistics ? <p>{Number(channel.statistics.subscriberCount).toLocaleString()} subscribers</p> : null}
+					</div>
 				</div>
+				{video.snippet ? <p className='Description'>{video.snippet.description}</p> : null}
 			</div>
 		)
 	}
