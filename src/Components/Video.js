@@ -19,6 +19,7 @@ class Video extends React.Component {
     componentDidMount() {
         console.log('componentDidMount')
         this.getVideoDetails()
+		
 		window.addEventListener('resize', () => {
 			this.getWidth()
 		})
@@ -33,17 +34,15 @@ class Video extends React.Component {
         const { videoId } = this.state
 
         try {
-            await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,contentDetails,statistics&key=${process.env.REACT_APP_API_KEY}`)
+            const video = await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,contentDetails,statistics&key=${process.env.REACT_APP_API_KEY}`)
             .then(response => response.data.items[0])
-            .then(async response => {
-                let channel = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${response.snippet.channelId}&key=${process.env.REACT_APP_API_KEY}`)
-                console.log(response)
-                console.log(channel.data.items[0])
-                this.setState({
-                    video: response,
-                    channel: channel.data.items[0]
-                })
-            })
+            const channel = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${video.snippet.channelId}&key=${process.env.REACT_APP_API_KEY}`)
+            .then(response => response.data.items[0])
+			
+			this.setState({
+				video: video,
+				channel: channel
+			})
         }
         catch (e) {
             console.log('Video could not be found')
@@ -55,10 +54,10 @@ class Video extends React.Component {
 	}
 	// Write function that takes and makes comments
 	// Make a panel aside for related videos. Maybe another component?
-	// Video dimensions can be fixed for responsiveness by registering window width
 
 	render() {
 		const { videoId, video, channel, width } = this.state
+
 		let opts = {
 			width: '960',
 			height: '585'
@@ -68,8 +67,7 @@ class Video extends React.Component {
 				width: '640',
 				height: '390'
 			}
-		}
-		else if (width <= 815) {
+		} else if (width <= 815) {
 			opts = {
 				width: '320',
 				height: '195'
