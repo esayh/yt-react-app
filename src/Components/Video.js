@@ -48,7 +48,7 @@ class Video extends React.Component {
             console.log('Video could not be found')
         }
     }
-    
+
 	goBack = () => {
 		this.props.history.goBack()
 	}
