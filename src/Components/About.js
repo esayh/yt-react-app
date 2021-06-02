@@ -2,6 +2,11 @@ import React from 'react'
 import './About.css'
 import GitHubIcon from '@material-ui/icons/GitHub'
 
+/*
+Great example of a functional component -- consider writing your next
+React app using purely functional components and replacing lifecycle
+methods with Hooks!
+*/
 const About = () => {
 	return (
 		<div className='About'>

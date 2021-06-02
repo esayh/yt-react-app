@@ -33,6 +33,9 @@ class Video extends React.Component {
         const { videoId } = this.state
 
         try {
+            /*
+            Nice use of chained requests to different API endpoints to fetch interdependent data.
+            */
             await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet,contentDetails,statistics&key=${process.env.REACT_APP_API_KEY}`)
             .then(response => response.data.items[0])
             .then(async response => {
@@ -45,6 +48,11 @@ class Video extends React.Component {
                 })
             })
         }
+        /*
+        Consider logging the e itself below to provide more detailed error handling.
+        Another option is to chain a call to the `.catch()` axios method at the end of your
+        request to catch any errors originating from your API request.
+        */
         catch (e) {
             console.log('Video could not be found')
         }
@@ -58,6 +66,9 @@ class Video extends React.Component {
 	// Video dimensions can be fixed for responsiveness by registering window width
 
 	render() {
+        /* Great to see such ingenuity in prioritizing a dynamic user experience. I think
+        you're really going to appreciate react-bootstrap for its convenient and dynamic styling
+        */
 		const { videoId, video, channel, width } = this.state
 		let opts = {
 			width: '960',

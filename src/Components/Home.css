@@ -14,7 +14,7 @@ a {
     text-decoration: none;
 }
 a > div {
-    display: flex;
+    display: flex; /* Nice use of Flexbox! */
     color: #2ED2E6;
     margin-bottom: 40px;
 }
