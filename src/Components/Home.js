@@ -4,10 +4,13 @@ import axios from 'axios'
 import './Home.css'
 
 
-
+/*
+Exemplary work on this class component
+*/
 class Home extends Component {
 	constructor() {
-		super()
+        super()
+        // Well done handling state
 		this.state = {
 			searchVideos: '',
 			videos: [],
@@ -16,9 +19,13 @@ class Home extends Component {
 		}
 	}
 
+    /*
+    Nice use of handleSubmit, handleChange, and handleNumbers to update React views
+    corresponding to user input.
+    */
 	handleSubmit = async (event) => {
-		event.preventDefault()
-		const credentials = process.env.REACT_APP_API_KEY
+        event.preventDefault()
+		const credentials = process.env.REACT_APP_API_KEY // Nice job hiding API key in environment variable
 		const ytsearch = this.state.searchVideos
 		const { numberOfResults } = this.state
 
@@ -30,8 +37,8 @@ class Home extends Component {
 				videos: data.items,
 				searchVideos: '',
 				showVid : true
-			})
-		} catch (error) {
+            })
+		} catch (error) { // Another good opportunity to create more meaningful error handling
 			this.setState({
 				videos: [],
 				searchVideos: '',
@@ -40,6 +47,7 @@ class Home extends Component {
 	}
 
 	handleChange = (e) => {
+        // Good use of .setState
 		this.setState({
 			searchVideos: e.target.value,
 		})
@@ -50,6 +58,7 @@ class Home extends Component {
 		})
 	}
 
+    // Great job displaying fetched video data
 	render() {
 		const { videos, searchVideos } = this.state
 		const allVids = videos.map((vid) => {
